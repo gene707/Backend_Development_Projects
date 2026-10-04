@@ -1,0 +1,26 @@
+[
+  {
+    "id": "usr-admin-1",
+    "name": "System Admin",
+    "email": "admin@example.com",
+    "passwordHash": "$2a$10$Vgnz3blyXnd55jIG.y8b1u3JOorLa8z9iQt4srhj5ztuM75ftN3Nu",
+    "role": "admin",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "usr-regular-1",
+    "name": "Standard User",
+    "email": "user@example.com",
+    "passwordHash": "$2a$10$Vgnz3blyXnd55jIG.y8b1uIaC4vMteLOqrb.uVwJdMVkYbMv7xmRq",
+    "role": "user",
+    "createdAt": "2026-01-02T00:00:00.000Z"
+  },
+  {
+    "id": "usr-1791092976619-654",
+    "name": "Test Candidate",
+    "email": "testuser-1791092976199@example.com",
+    "passwordHash": "$2a$10$mbrahjiPHSwRfxMgReE6GOXxpVw737tQgYNq0wOPV.fuI3omgjYUa",
+    "role": "user",
+    "createdAt": "2026-10-04T05:49:36.619Z"
+  }
+]

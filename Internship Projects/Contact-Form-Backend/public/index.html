@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form - Interactive Backend Demo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background: #f1f5f9; color: #1e293b; padding: 40px 20px; display: flex; justify-content: center; }
+    .container { width: 100%; max-width: 680px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); padding: 36px; }
+    h1 { font-size: 26px; color: #0f172a; margin-bottom: 8px; }
+    p.subtitle { color: #64748b; font-size: 14px; margin-bottom: 24px; }
+    .badge { display: inline-block; padding: 4px 10px; font-size: 12px; background: #dbeafe; color: #1e40af; border-radius: 9999px; font-weight: 600; margin-bottom: 12px; }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #334155; }
+    label span.req { color: #ef4444; }
+    input[type="text"], input[type="email"], textarea {
+      width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 14px; transition: border-color 0.2s; outline: none;
+    }
+    input:focus, textarea:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+    textarea { height: 110px; resize: vertical; }
+    button.submit-btn {
+      width: 100%; padding: 12px; background: #2563eb; color: #fff; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+    }
+    button.submit-btn:hover { background: #1d4ed8; }
+    button.submit-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+    .alert { display: none; padding: 14px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; }
+    .alert-success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+    .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    .proof-box { margin-top: 10px; padding: 10px; background: #ffffff; border: 1px dashed #059669; border-radius: 6px; font-family: monospace; font-size: 12px; word-break: break-all; }
+    .links-box { margin-top: 24px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #64748b; }
+    .links-box a { color: #2563eb; text-decoration: none; font-weight: 500; }
+    .links-box a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="badge">Backend Deliverable #2</span>
+    <h1>Contact Form Backend</h1>
+    <p class="subtitle">Submit a message to test validation, disk persistence, and email forwarding dispatch.</p>
+
+    <div id="alertSuccess" class="alert alert-success">
+      <div id="successMsg">Message submitted successfully!</div>
+      <div id="proofContainer" class="proof-box"></div>
+    </div>
+
+    <div id="alertError" class="alert alert-error">
+      <ul id="errorList" style="margin-left: 18px;"></ul>
+    </div>
+
+    <form id="contactForm">
+      <div class="form-group">
+        <label for="name">Full Name <span class="req">*</span></label>
+        <input type="text" id="name" name="name" placeholder="John Doe" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address <span class="req">*</span></label>
+        <input type="email" id="email" name="email" placeholder="john.doe@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number (Optional)</label>
+        <input type="text" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+      </div>
+
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" placeholder="Project Inquiry or Feedback">
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message <span class="req">*</span></label>
+        <textarea id="message" name="message" placeholder="Please write at least 10 characters..." required></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn" class="submit-btn">Send Contact Submission</button>
+    </form>
+
+    <div class="links-box">
+      <strong>Verification Endpoints:</strong>
+      <br>
+      • View Stored Submissions: <a href="/api/contact/submissions" target="_blank">/api/contact/submissions</a>
+      <br>
+      • API Health Status: <a href="/health" target="_blank">/health</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const alertSuccess = document.getElementById('alertSuccess');
+    const alertError = document.getElementById('alertError');
+    const errorList = document.getElementById('errorList');
+    const proofContainer = document.getElementById('proofContainer');
+    const successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alertSuccess.style.display = 'none';
+      alertError.style.display = 'none';
+      errorList.innerHTML = '';
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Submitting...';
+
+      const payload = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value
+      };
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          successMsg.innerText = data.message;
+          proofContainer.innerHTML = `
+            <strong>Submission Proof:</strong><br>
+            ID: ${data.submissionId}<br>
+            Delivered: ${data.proof.deliveryStatus}<br>
+            Timestamp: ${data.proof.submittedAt}<br>
+            ${data.proof.emailProof && data.proof.emailProof.previewUrl ? '<a href="' + data.proof.emailProof.previewUrl + '" target="_blank">📧 View Ethereal Sent Email Preview</a>' : 'Dispatched via Nodemailer'}
+          `;
+          alertSuccess.style.display = 'block';
+          form.reset();
+        } else {
+          if (data.errors && data.errors.length) {
+            data.errors.forEach(err => {
+              const li = document.createElement('li');
+              li.innerText = `${err.field}: ${err.message}`;
+              errorList.appendChild(li);
+            });
+          } else {
+            const li = document.createElement('li');
+            li.innerText = data.message || 'Submission failed';
+            errorList.appendChild(li);
+          }
+          alertError.style.display = 'block';
+        }
+      } catch (err) {
+        const li = document.createElement('li');
+        li.innerText = 'Network error: ' + err.message;
+        errorList.appendChild(li);
+        alertError.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Send Contact Submission';
+      }
+    });
+  </script>
+</body>
+</html>

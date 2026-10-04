@@ -1,0 +1,52 @@
+[
+  {
+    "id": "prod-1",
+    "name": "Wireless Noise-Canceling Headphones",
+    "description": "High-fidelity audio with active noise cancellation and 30-hour battery life.",
+    "price": 199.99,
+    "category": "Electronics",
+    "stock": 45,
+    "createdAt": "2026-01-15T08:30:00.000Z",
+    "updatedAt": "2026-01-15T08:30:00.000Z"
+  },
+  {
+    "id": "prod-2",
+    "name": "Ergonomic Mechanical Keyboard",
+    "description": "Customizable hot-swappable RGB mechanical keyboard with brown switches.",
+    "price": 129.5,
+    "category": "Computers",
+    "stock": 30,
+    "createdAt": "2026-02-01T10:15:00.000Z",
+    "updatedAt": "2026-02-01T10:15:00.000Z"
+  },
+  {
+    "id": "prod-3",
+    "name": "Ultra-Wide 4K Gaming Monitor",
+    "description": "34-inch curved gaming display with 144Hz refresh rate and HDR support.",
+    "price": 499,
+    "category": "Electronics",
+    "stock": 18,
+    "createdAt": "2026-02-20T14:45:00.000Z",
+    "updatedAt": "2026-02-20T14:45:00.000Z"
+  },
+  {
+    "id": "prod-4",
+    "name": "Stainless Steel Thermal Water Bottle",
+    "description": "Double-wall insulated bottle that keeps beverages cold for 24h or hot for 12h.",
+    "price": 24.99,
+    "category": "Lifestyle",
+    "stock": 120,
+    "createdAt": "2026-03-05T09:00:00.000Z",
+    "updatedAt": "2026-03-05T09:00:00.000Z"
+  },
+  {
+    "id": "prod-5",
+    "name": "Smart Fitness Tracker Band",
+    "description": "Waterproof fitness band tracking heart rate, sleep quality, and workouts.",
+    "price": 59.95,
+    "category": "Wearables",
+    "stock": 65,
+    "createdAt": "2026-03-12T16:20:00.000Z",
+    "updatedAt": "2026-03-12T16:20:00.000Z"
+  }
+]

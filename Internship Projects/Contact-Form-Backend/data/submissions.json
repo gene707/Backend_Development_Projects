@@ -1,0 +1,18 @@
+[
+  {
+    "id": "sub-1791092768446-749",
+    "name": "Alice Johnson",
+    "email": "alice.johnson@example.com",
+    "subject": "Partnership Inquiry",
+    "message": "Hello team, I would like to explore partnership opportunities with your platform.",
+    "phone": "+1 555-0199",
+    "submittedAt": "2026-10-04T05:46:08.447Z",
+    "deliveryStatus": "delivered",
+    "emailProof": {
+      "messageId": "<f2f2017d-5fab-5051-bc6d-524602d87ecc@example.com>",
+      "previewUrl": "https://ethereal.email/message/asHoIff39EhTKki0asHoJLJrKujo8juNAAAAAfYRD3tZpYi3omjKZc0jVK4",
+      "recipient": "contact-recipient@example.com",
+      "deliveredAt": "2026-10-04T05:46:12.786Z"
+    }
+  }
+]
