@@ -1,0 +1,37 @@
+{
+  "name": "secured-relational-crud-api",
+  "version": "1.0.0",
+  "description": "Secured RESTful CRUD API Server with Relational Database (SQLite/SQL), Schema Constraints, and Validation Middleware",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "migrate": "node scripts/migrate.js",
+    "seed": "node scripts/seed.js",
+    "db:reset": "node scripts/resetDb.js",
+    "test": "node scripts/test.js",
+    "cli:demo": "node scripts/cliDemo.js"
+  },
+  "keywords": [
+    "rest-api",
+    "crud",
+    "relational-database",
+    "sql",
+    "sqlite",
+    "security",
+    "middleware-validation",
+    "node",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "sqlite3": "^5.1.7"
+  }
+}

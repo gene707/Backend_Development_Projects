@@ -1,0 +1,88 @@
+version: '3.8'
+
+# ====================================================================
+# Multi-Tier Container Orchestration: Microservice RBAC Ecosystem
+# Packages services across isolated internal and external networks
+# ====================================================================
+
+services:
+  # 1. API Gateway & User Authorization Service
+  api-gateway:
+    build: .
+    container_name: rbac-api-gateway
+    restart: always
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=production
+      - PORT=3004
+      - JWT_SECRET=microservice_rbac_jwt_secret_token_key_2026
+      - BROKER_URL=amqp://rabbitmq:5672
+      - QUEUE_NAME=transactions.queue
+      - DB_PATH=/app/data/ecosystem.sqlite
+    volumes:
+      - shared-data:/app/data
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - public-net
+      - broker-net
+      - database-net
+
+  # 2. Decoupled Asynchronous Transaction Worker
+  transaction-worker:
+    build: .
+    container_name: rbac-transaction-worker
+    restart: always
+    command: ["node", "src/worker/transactionWorker.js"]
+    environment:
+      - NODE_ENV=production
+      - BROKER_URL=amqp://rabbitmq:5672
+      - QUEUE_NAME=transactions.queue
+      - DB_PATH=/app/data/ecosystem.sqlite
+      - WORKER_CONCURRENCY=5
+    volumes:
+      - shared-data:/app/data
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - broker-net
+      - database-net
+
+  # 3. Asynchronous Message Broker (RabbitMQ)
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rbac-rabbitmq-broker
+    restart: always
+    ports:
+      - "5672:5672"   # AMQP protocol
+      - "15672:15672" # RabbitMQ Management Dashboard
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - broker-net
+
+# --------------------------------------------------------------------
+# Network Isolation & Segmentation
+# --------------------------------------------------------------------
+networks:
+  public-net:
+    driver: bridge
+    name: rbac-public-net
+  broker-net:
+    driver: bridge
+    name: rbac-broker-net
+  database-net:
+    driver: bridge
+    name: rbac-database-net
+
+volumes:
+  shared-data:

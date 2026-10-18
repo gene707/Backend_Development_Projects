@@ -1,0 +1,30 @@
+{
+  "name": "websocket-realtime-hub",
+  "version": "1.0.0",
+  "description": "Concurrent WebSocket Real-Time Communication Hub with Multi-Channel Routing, In-Memory User Caching (Redis), and Persistent Transaction File Logging",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node scripts/test.js",
+    "cli:client": "node scripts/cliClient.js",
+    "cli:demo": "node scripts/cliDemo.js"
+  },
+  "keywords": [
+    "websocket",
+    "real-time",
+    "chat-channels",
+    "redis",
+    "in-memory-cache",
+    "file-logger",
+    "high-concurrency"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "ioredis": "^5.4.1",
+    "ws": "^8.18.0"
+  }
+}

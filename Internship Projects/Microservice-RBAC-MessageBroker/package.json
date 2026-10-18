@@ -1,0 +1,36 @@
+{
+  "name": "microservice-rbac-messagebroker",
+  "version": "1.0.0",
+  "description": "Role-Based Microservice API Ecosystem with Asynchronous Message Brokers (RabbitMQ/In-Memory), JWT RBAC Security, and Decoupled Transaction Workers",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "worker": "node src/worker/index.js",
+    "test": "node scripts/test.js",
+    "cli:demo": "node scripts/cliDemo.js",
+    "db:reset": "node scripts/resetDb.js"
+  },
+  "keywords": [
+    "microservices",
+    "rbac",
+    "jwt",
+    "message-broker",
+    "rabbitmq",
+    "async-workers",
+    "docker-compose",
+    "database-transactions"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.10.4",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.7"
+  }
+}

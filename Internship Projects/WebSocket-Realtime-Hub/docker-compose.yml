@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  websocket-hub:
+    build: .
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=production
+      - PORT=3003
+      - REDIS_URL=redis://redis:6379
+      - LOG_DIR=/app/logs
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+    networks:
+      - realtime-net
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - realtime-net
+
+volumes:
+  redis_data:
+
+networks:
+  realtime-net:
+    driver: bridge
