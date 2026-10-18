@@ -4,7 +4,7 @@ A collection of production-ready backend services and application engines demons
 
 ---
 
-## 📂 Featured Task Projects (Tasks 2, 3 & 4)
+## 📂 Progree Internship Task Projects (Tasks 2, 3 & 4)
 
 | Task | Dedicated Project Directory | Core Technologies | Description |
 |---|---|---|---|
